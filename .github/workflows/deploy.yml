@@ -2,3 +2,12 @@
 
 # This will run on each accepted pull request to main repo
 name: Deploy to AWS ECS
+
+on:
+  workflow_dispatch:
+
+jobs:
+  dummy:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "This is a placeholder job."
