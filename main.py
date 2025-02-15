@@ -1,8 +1,8 @@
 import uvicorn
 
+from carnival.core.config import settings
 from carnival.core.logger import logger
 
 if __name__ == "__main__":
-    # TODO:: Load from .env and scale workers
     logger.info("\nStarting Carnival compilance Service 🎉 \n")
-    uvicorn.run("carnival.app:app", host="0.0.0.0", port=7000, reload=True)
+    uvicorn.run("carnival.app:app", host=settings.HOST, port=settings.PORT, reload=True)
