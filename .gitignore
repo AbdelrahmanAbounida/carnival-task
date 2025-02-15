@@ -1,0 +1,8 @@
+__pycache__
+venv
+cli
+.env
+cli
+.pdm-build
+.ruff_cache
+docs.txt

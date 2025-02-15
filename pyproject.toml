@@ -1,0 +1,58 @@
+[project]
+name = "carnival"
+version = "0.1.0"
+description = "carnival compilance service that checks if an optimization result follows the"
+authors = [
+    {name = "aboneda", email = "abdelrahmanaboneda@gmail.com"},
+]
+dependencies = [
+    "fastapi>=0.115.8",
+    "uvicorn>=0.34.0",
+]
+requires-python = ">=3.11"
+readme = "README.md"
+license = {text = "MIT"}
+
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
+
+[tool.pdm]
+distribution = true
+version = { source = "file", path = "carnival/__init__.py" }
+build.package-dir = "carnival"
+
+
+[tool.mypy]
+strict = true
+
+[[tool.mypy.overrides]]
+module = "tests.*"
+ignore_missing_imports = true
+check_untyped_defs = true
+
+
+[tool.coverage.report]
+show_missing = true
+sort = "-Cover"
+
+[tool.coverage.html]
+show_contexts = true
+
+
+[dependency-groups]
+test = [
+    "pytest>=8.3.4",
+    "pytest-cov>=6.0.0",
+]
+lint = [
+    "ruff>=0.9.6",
+    "black>=25.1.0",
+    "isort>=6.0.0",
+]
+dev = [
+    "bandit>=1.8.2",
+    "safety>=3.3.0",
+    "pre-commit>=4.1.0",
+    "mypy>=1.15.0",
+]

@@ -1,0 +1,29 @@
+{
+  "regions": [
+    {
+      "region_start": 0.0,
+      "region_end": 27.140542199038926,
+      "is_aaqs_allowed": ["MGO"]
+    },
+    {
+      "region_start": 27.140542199038926,
+      "region_end": 189.17802962860196,
+      "is_aaqs_allowed": ["MGO", "HFO"]
+    },
+    {
+      "region_start": 189.17802962860196,
+      "region_end": 255.2481369130313,
+      "is_aaqs_allowed": ["MGO"]
+    },
+    {
+      "region_start": 255.2481369130313,
+      "region_end": 328.5603162828219,
+      "is_aaqs_allowed": ["MGO", "HFO"]
+    },
+    {
+      "region_start": 328.5603162828219,
+      "region_end": 351.6441799629659,
+      "is_aaqs_allowed": ["MGO"]
+    }
+  ]
+}
