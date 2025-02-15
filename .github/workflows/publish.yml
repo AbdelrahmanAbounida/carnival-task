@@ -21,14 +21,14 @@ jobs:
       - name: Build Docker image
         uses: docker/build-push-action@v5
         with:
-          context: . # Root directory as the build context
+          context: .
           load: true
-          tags: ${{ needs.build.outputs.DOCKER_IMAGE_NAME }}:latest # Reference the "constant" value here
+          tags: ${{ steps.build.outputs.DOCKER_IMAGE_NAME }}:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
       - name: Test Docker image
-        run: docker run ${{ needs.build.outputs.DOCKER_IMAGE_NAME }}:latest echo "Docker image built successfully"
+        run: docker run ${{ steps.build.outputs.DOCKER_IMAGE_NAME }}:latest echo "Docker image built successfully"
 
   publish-docker:
     needs: build
