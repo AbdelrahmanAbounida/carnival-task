@@ -1,25 +1,42 @@
-# could be pdm publish to pypi/remote repo  or docker publish to ECR
-# This publish will be to github repo
+# could be pdm publish to pypi/github  or docker publish to ECR
 
 name: PDM and Docker Publish
 
 on:
-  pull_request:
-    branches: [main]
+  workflow_run:
+    workflows: ["Carnival docker and pdm build"]
+    types:
+      - completed
 
 jobs:
-  github-publish:
-    name: upload release to PyPI
+  build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      id-token: write
+    steps:
+      - name: Test Docker image
+        run: docker run carnival echo "Docker image built successfully" # TODO:: load docker image name from global config
+
+  publish-docker:
+    needs: build
+    if: contains(github.event.workflow_run.head_commit.message, '[publish-docker]') # ✅ Use commit message
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+      - name: Build, tag, and push image to Amazon ECR
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: carnival
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
-      - uses: pdm-project/setup-pdm@v4
-
-      - name: Publish package distributions to PyPI
-        run: pdm publish --repository https://github.com/AbdelrahmanAbounida/carnival-task
-
-  # TODO:: publish to ECR
+  # TODO:: pusblish to pypi / github packages pdm

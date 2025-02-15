@@ -4,8 +4,10 @@
 name: Carnival docker and pdm build
 
 on:
-  pull_request:
-    branches: [main]
+  push:
+    branches: [feat/abdel]
+  # pull_request:
+  #   branches: [main]
 
 jobs:
   build:
