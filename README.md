@@ -10,18 +10,18 @@
 - [x] PDM init
 - [x] precommit
 - [x] linting >> black, ruff, isort
-- [ ] sample route
-- [ ] Dockerizing app
-- [ ] Makefile
-- [ ] logging
-- [ ] init TDD
-- [ ] pytest , pytest cov
-- [ ] CICD
+- [x] sample route
+- [x] Dockerizing app
+- [x] logging
+- [x] init TDD
+- [x] pytest
+- [x] CICD
 - [ ] Basic Functionality
 - [ ] .env handling with dynaconf
 - [ ] Update Task
 - [ ] setup in README
 - [ ] authenticate routes
+- [ ] Makefile
 
 2. Secondary
 
@@ -38,3 +38,4 @@
 - [ ] Terraform Provisioning
 - [ ] ratelimit
 - [ ] bumping api on push to main
+- [ ] pytest cov

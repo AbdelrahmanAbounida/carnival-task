@@ -8,6 +8,7 @@ authors = [
 dependencies = [
     "fastapi>=0.115.8",
     "uvicorn>=0.34.0",
+    "httpx>=0.28.1",
 ]
 requires-python = ">=3.11"
 readme = "README.md"
@@ -24,6 +25,7 @@ version = { source = "file", path = "carnival/__init__.py" }
 
 [tool.mypy]
 strict = true
+ignore_missing_imports = true
 
 [[tool.mypy.overrides]]
 module = "tests.*"
@@ -54,4 +56,5 @@ dev = [
     "safety>=3.3.0",
     "pre-commit>=4.1.0",
     "mypy>=1.15.0",
+    "tox-pdm>=0.7.2",
 ]
