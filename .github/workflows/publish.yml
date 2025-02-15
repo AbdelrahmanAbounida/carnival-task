@@ -14,9 +14,10 @@ jobs:
     steps:
       - name: Test Docker image
         run: docker run carnival echo "Docker image built successfully" # TODO:: load docker image name from global config
+
   publish-docker:
     needs: build
-    if: contains(github.event.pull_request.labels.*.name, 'publish-docker')
+    if: contains(github.event.workflow_run.head_commit.message, '[publish-docker]') # ✅ Use commit message
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -37,4 +38,5 @@ jobs:
         run: |
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+
   # TODO:: pusblish to pypi / github packages pdm
