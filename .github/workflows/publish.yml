@@ -9,6 +9,11 @@ on:
     branches: [main]
 
 jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Test Docker image
+        run: docker run carnival echo "Docker image built successfully" # TODO:: load docker image name from global config
   publish-docker:
     needs: build
     if: contains(github.event.pull_request.labels.*.name, 'publish-docker')
@@ -32,3 +37,4 @@ jobs:
         run: |
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+  # TODO:: pusblish to pypi / github packages pdm
