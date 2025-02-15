@@ -1,3 +1,8 @@
 # Could be to AWS Service aka ECS / EC2 / Fragate,..
 
 # This will run on each accepted pull request to main repo
+name: Deploy to AWS ECS
+
+on:
+  push: # force push for deploy to prevent this during dev for now
+    branches: [main]
