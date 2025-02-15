@@ -15,7 +15,7 @@
 - [x] logging
 - [x] init TDD
 - [x] pytest
-- [ ] CICD
+- [x] CICD
 - [ ] Basic Functionality
 - [ ] .env handling with dynaconf
 - [ ] Update Task
