@@ -11,6 +11,9 @@ dependencies = [
     "httpx>=0.28.1",
     "pydantic-settings>=2.7.1",
     "python-dotenv>=1.0.1",
+    "aiofiles>=24.1.0",
+    "pandas>=2.2.3",
+    "pytest-asyncio>=0.25.3",
 ]
 requires-python = ">=3.11"
 readme = "README.md"
@@ -42,10 +45,16 @@ sort = "-Cover"
 [tool.coverage.html]
 show_contexts = true
 
+[tool.pytest.ini_options]
+markers = [
+    "data_validation: check if the loaded optimization data is valid ",
+]
+log_cli=true
 
 [dependency-groups]
 test = [
     "pytest>=8.3.4",
+    "pytest-asyncio>=0.25.3",
     "pytest-cov>=6.0.0",
 ]
 lint = [

@@ -10,14 +10,11 @@ load_dotenv()
 class Settings(BaseSettings):
     PORT: int = os.environ.get("PORT", 7000)
     HOST: str = os.environ.get("HOST", "0.0.0.0")
-
-    # current version
     CURRENT_VERSION: str = "v1"
+    SERVER_API_KEY: str = os.environ.get("SERVER_API_KEY", "")
 
-    # static api key to handle our api
-    SERVER_API_KEY: str = os.environ.get(
-        "SERVER_API_KEY", ""
-    )  # TOOD:: to be used in auth service
+    ROUTE_SERVICE_BASE_FILE: str = "resources"  # TODO:: this should be basic api route
+    OPTIMIZATION_SERVICE_BASE_FILE: str = "resources"
 
     # running environment
     ENV: Literal["online", "local"] = os.environ.get("ENVIRONMENT", "local")
