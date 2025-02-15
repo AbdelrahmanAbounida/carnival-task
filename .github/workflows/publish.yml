@@ -1,4 +1,4 @@
-# could be pdm publish to pypi/remote repo  or docker publish to ECR
+# could be pdm publish to pypi/github (if we gonna make it public repo)  or docker publish to ECR
 # This publish will be to github repo
 
 name: PDM and Docker Publish
@@ -9,7 +9,7 @@ on:
 
 jobs:
   github-publish:
-    name: upload release to PyPI
+    name: upload release to GitHub Packages
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -19,7 +19,11 @@ jobs:
 
       - uses: pdm-project/setup-pdm@v4
 
-      - name: Publish package distributions to PyPI
-        run: pdm publish --repository https://github.com/AbdelrahmanAbounida/carnival-task
+      - name: Publish package distributions to GitHub Packages
+        run: |
+          pdm config repository.github.url https://upload.pypi.org/legacy/
+          pdm publish --repository github
+        env:
+        PDM_PUBLISH_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
 
   # TODO:: publish to ECR
