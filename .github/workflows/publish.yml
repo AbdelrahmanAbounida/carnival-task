@@ -1,29 +1,54 @@
-# could be pdm publish to pypi/github (if we gonna make it public repo)  or docker publish to ECR
-# This publish will be to github repo
+# could be pdm publish to pypi/github  or docker publish to ECR
 
 name: PDM and Docker Publish
 
 on:
+  push:
+    branches: [feat/abdel]
   pull_request:
     branches: [main]
 
 jobs:
-  github-publish:
-    name: upload release to GitHub Packages
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      id-token: write
-    steps:
-      - uses: actions/checkout@v4
+  # if we gonna make it public
+  # github-publish:
+  #   name: upload release to GitHub Packages
+  #   runs-on: ubuntu-latest
+  #   permissions:
+  #     contents: read
+  #     id-token: write
+  #   steps:
+  #     - uses: actions/checkout@v4
 
-      - uses: pdm-project/setup-pdm@v4
+  #     - uses: pdm-project/setup-pdm@v4
 
-      - name: Publish package distributions to GitHub Packages
-        run: |
-          pdm config repository.github.url https://upload.pypi.org/legacy/
-          pdm publish --repository github
-        env:
-        PDM_PUBLISH_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+  #     - name: Publish package distributions to GitHub Packages
+  #       run: |
+  #         pdm config repository.github.url https://upload.pypi.org/legacy/
+  #         pdm publish --repository github
+  #       env:
+  #       PDM_PUBLISH_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
 
   # TODO:: publish to ECR
+  publish-docker:
+    needs: build
+    if: contains(github.event.pull_request.labels.*.name, 'publish-docker')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+      - name: Build, tag, and push image to Amazon ECR
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: carnival
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
