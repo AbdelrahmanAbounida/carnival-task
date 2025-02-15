@@ -1,0 +1,40 @@
+# mypy checking, unit and integration testing and could be load testing later
+
+name: Carnival Test
+
+on:
+  push:
+    branches: [feat/abdel]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.11"]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v3
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install PDM
+        run: pip install pdm
+
+      - name: Install dependencies
+        run: pdm install
+
+      # TODO:: add unit testing
+      # - name: Run unit tests
+      #   run: pdm run pytest tests/unit
+
+      - name: Run integration tests
+        run: pdm run pytest tests/integration
+
+      # TODO:: add testing coverage
+      # TODO:: Load testing

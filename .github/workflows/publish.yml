@@ -1,0 +1,25 @@
+# could be pdm publish to pypi/remote repo  or docker publish to ECR
+# This publish will be to github repo
+
+name: PDM and Docker Publish
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  github-publish:
+    name: upload release to PyPI
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pdm-project/setup-pdm@v4
+
+      - name: Publish package distributions to PyPI
+        run: pdm publish --repository https://github.com/AbdelrahmanAbounida/carnival-task
+
+  # TODO:: publish to ECR

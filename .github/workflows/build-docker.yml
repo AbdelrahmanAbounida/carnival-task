@@ -1,0 +1,29 @@
+# will include liniting, formatting,  too beside  docker and pdm building
+
+# This will run on each accepted pull request to main repo
+name: Carnival docker and pdm build
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Install PDM
+        run: pip install pdm
+
+      - name: Install dependencies
+        run: pdm install
+
+      - name: Build Docker image
+        run: docker build -t carnival .

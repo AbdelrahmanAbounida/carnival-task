@@ -13,9 +13,9 @@
 - [x] sample route
 - [x] Dockerizing app
 - [x] logging
-- [ ] init TDD
-- [ ] pytest , pytest cov
-- [ ] CICD
+- [x] init TDD
+- [x] pytest
+- [x] CICD
 - [ ] Basic Functionality
 - [ ] .env handling with dynaconf
 - [ ] Update Task
@@ -38,3 +38,4 @@
 - [ ] Terraform Provisioning
 - [ ] ratelimit
 - [ ] bumping api on push to main
+- [ ] pytest cov
