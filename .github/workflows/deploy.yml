@@ -4,4 +4,10 @@
 name: Deploy to AWS ECS
 
 on:
-  workflow_dispatch: #  workflow_dispatch to prevent this during dev for now
+  workflow_dispatch:
+
+jobs:
+  dummy:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "This is a placeholder job."

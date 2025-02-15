@@ -1,4 +1,4 @@
-# could be pdm publish to pypi/github  or docker publish to ECR
+# pdm publish to pypi/github  or docker publish to ECR
 
 name: PDM and Docker Publish
 
@@ -6,32 +6,22 @@ on:
   push:
     branches: [feat/abdel]
   pull_request:
-    branches: [main]
+    branches: [main] # TODO:: keep it only main
 
 jobs:
-  # if we gonna make it public
-  # github-publish:
-  #   name: upload release to GitHub Packages
-  #   runs-on: ubuntu-latest
-  #   permissions:
-  #     contents: read
-  #     id-token: write
-  #   steps:
-  #     - uses: actions/checkout@v4
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build Docker image
+        run: docker build -t carnival .
 
-  #     - uses: pdm-project/setup-pdm@v4
+      - name: Test Docker image
+        run: docker run carnival echo "Docker image built successfully"
+      # TODO:: load docker image name from global config
 
-  #     - name: Publish package distributions to GitHub Packages
-  #       run: |
-  #         pdm config repository.github.url https://upload.pypi.org/legacy/
-  #         pdm publish --repository github
-  #       env:
-  #       PDM_PUBLISH_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
-
-  # TODO:: publish to ECR
   publish-docker:
     needs: build
-    if: contains(github.event.pull_request.labels.*.name, 'publish-docker')
+    if: contains(github.event.workflow_run.head_commit.message, '[publish-docker]')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -52,3 +42,5 @@ jobs:
         run: |
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+
+  # TODO:: pusblish to pypi / github packages pdm
