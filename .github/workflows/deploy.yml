@@ -4,5 +4,4 @@
 name: Deploy to AWS ECS
 
 on:
-  push: # force push for deploy to prevent this during dev for now
-    branches: [main]
+  workflow_dispatch: #  workflow_dispatch to prevent this during dev for now
