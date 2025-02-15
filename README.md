@@ -6,10 +6,10 @@
 
 1. Main
 
-- [ x ] Basic Project Setup
-- [ x ] PDM init
-- [ x ] precommit
-- [ x ] linting >> black, ruff, isort
+- [x] Basic Project Setup
+- [x] PDM init
+- [x] precommit
+- [x] linting >> black, ruff, isort
 - [ ] sample route
 - [ ] Dockerizing app
 - [ ] Makefile

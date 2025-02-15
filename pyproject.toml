@@ -20,7 +20,6 @@ build-backend = "pdm.backend"
 [tool.pdm]
 distribution = true
 version = { source = "file", path = "carnival/__init__.py" }
-build.package-dir = "carnival"
 
 
 [tool.mypy]
