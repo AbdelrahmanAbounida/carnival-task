@@ -2,6 +2,3 @@
 
 # This will run on each accepted pull request to main repo
 name: Deploy to AWS ECS
-
-on:
-  workflow_dispatch: #  workflow_dispatch to prevent this during dev for now
