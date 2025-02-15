@@ -6,14 +6,13 @@
 
 1. Main
 
-- [ x ] Basic Project Setup
-- [ x ] PDM init
-- [ x ] precommit
-- [ x ] linting >> black, ruff, isort
-- [ ] sample route
-- [ ] Dockerizing app
-- [ ] Makefile
-- [ ] logging
+- [x] Basic Project Setup
+- [x] PDM init
+- [x] precommit
+- [x] linting >> black, ruff, isort
+- [x] sample route
+- [x] Dockerizing app
+- [x] logging
 - [ ] init TDD
 - [ ] pytest , pytest cov
 - [ ] CICD
@@ -22,6 +21,7 @@
 - [ ] Update Task
 - [ ] setup in README
 - [ ] authenticate routes
+- [ ] Makefile
 
 2. Secondary
 
