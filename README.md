@@ -19,7 +19,9 @@ make run
 
 ## 1. PDM Build
 
-### installation
+<br />
+
+**installation**
 
 ```
 pip install pdm
@@ -28,13 +30,17 @@ source venv/bin/activate
 pdm install
 ```
 
-### linting and formatting
+<br />
+
+**linting and formatting**
 
 ```
 pdm run pre-commit
 ```
 
-### testing
+<br />
+
+**testing**
 
 ```
 pdm run pytest
@@ -48,8 +54,6 @@ docker run -it -p 7000:7000 carnival
 ```
 
 # TODO
-
-1. Main
 
 - [x] Basic Project Setup
 - [x] PDM init
