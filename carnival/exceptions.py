@@ -11,7 +11,7 @@ class OptimizationResultsNotFoundException(Exception):
         self.arrival_port = arrival_port
         self.message = (
             message
-            or f"Optimization results not found for route from {departure_port} to {arrival_port}"
+            or f"No Optimization results found for routes between ({departure_port} and {arrival_port})"
         )
         super().__init__(self.message)
 

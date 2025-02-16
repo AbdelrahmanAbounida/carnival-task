@@ -1,9 +1,10 @@
 import os
 from datetime import datetime
-from functools import lru_cache
+
+# from functools import lru_cache
+from async_lru import alru_cache
 from io import StringIO
 from typing import Awaitable, Optional, Any
-
 import aiofiles
 import pandas as pd
 from pandas import DataFrame
@@ -42,7 +43,7 @@ class OptimizationService(Service):
             efs_storage_path or settings.OPTIMIZATION_SERVICE_BASE_FILE
         )
 
-    @lru_cache(
+    @alru_cache(
         10
     )  # Assuming EFS Service might need cache (testing could prove the reverse)
     async def get_and_cache_optimization_results(

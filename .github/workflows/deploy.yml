@@ -1,13 +1,14 @@
-# Could be to AWS Service aka ECS / EC2 / Fragate,..
+#  ECS / EC2 / Fragate,..
 
 # This will run on each accepted pull request to main repo
 name: Deploy to AWS ECS
 
 on:
-  workflow_dispatch:
+  pull_request:
+    branches: [main]
 
 jobs:
   dummy:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "This is a placeholder job."
+      - run: echo "For Auto Deployment"
