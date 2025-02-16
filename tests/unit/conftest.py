@@ -9,17 +9,7 @@ from carnival.services.optimization_service import (
 )
 from carnival.services.route_service import AllowedRegionFuel, RegionFuels, RouteService
 from carnival.services.compilance_service import ComplianceService
-from unittest.mock import MagicMock
-
-
-@pytest.fixture
-def correct_dep_port():
-    return "OMSTQ"
-
-
-@pytest.fixture
-def correct_arrival_port():
-    return "AEJEA"
+from unittest.mock import AsyncMock
 
 
 # ************************
@@ -106,8 +96,8 @@ def mock_allowed_fuels():
 
 @pytest.fixture
 def compliance_service():
-    optimization_service = MagicMock()
-    route_service = MagicMock()
+    optimization_service = AsyncMock()
+    route_service = AsyncMock()
     return ComplianceService(optimization_service, route_service)
 
 

@@ -5,6 +5,7 @@ from carnival.services.optimization_service import (
 from carnival.services.route_service import RegionFuels, RouteService
 from carnival.services.base import Service
 from pydantic import BaseModel
+from typing import Awaitable
 
 
 class CompliantReport(BaseModel):
@@ -19,16 +20,17 @@ class ComplianceService(Service):
         self.optimization_service = optimization_service
         self.route_service = route_service
 
-    def is_optimization_compliant(
+    async def check_optimization_compliance(
         self, departure_port: str, arrival_port: str
-    ) -> CompliantReport:
+    ) -> Awaitable[CompliantReport]:
         """generate compilant report for the optimization data generated for a sepcific ship route between 2 ports"""
         optimization_result = (
-            self.optimization_service.get_and_cache_optimization_results(
+            await self.optimization_service.get_and_cache_optimization_results(
                 departure_port, arrival_port
             )
         )
-        allowed_fuels = self.route_service.get_allowed_fuels(
+
+        allowed_fuels = await self.route_service.get_allowed_fuels(
             departure_port, arrival_port
         )
 

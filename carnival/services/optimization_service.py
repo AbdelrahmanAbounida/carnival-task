@@ -2,7 +2,7 @@ import os
 from datetime import datetime
 from functools import lru_cache
 from io import StringIO
-from typing import Awaitable
+from typing import Awaitable, Optional, Any
 
 import aiofiles
 import pandas as pd
@@ -24,7 +24,7 @@ class OptimizationResult(BaseModel):
     sog: float
     latitude: float
     longitude: float
-    timezone_name: str
+    timezone_name: Optional[Any] = None
     hfo_fuel_consumption: float
     mgo_fuel_consumption: float
     avg_rpm: float
