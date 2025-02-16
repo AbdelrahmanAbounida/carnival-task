@@ -42,6 +42,38 @@ class OptimizationService(Service):
             efs_storage_path or settings.OPTIMIZATION_SERVICE_BASE_FILE
         )
 
+    @lru_cache(
+        10
+    )  # Assuming EFS Service might need cache (testing could prove the reverse)
+    async def get_and_cache_optimization_results(
+        self, departure_port: str, arrival_port: str, force_reload: bool = False
+    ) -> Awaitable[list[OptimizationResult]]:
+        """generate optimization results based on the given ports and load data from according file
+
+        Note: Lets assume that the optimization result store its response in a file format like
+        optimization_{departure_port}_{arrival_port}.csv >> so we can load it from the EFS storage
+
+        """
+        if force_reload:
+            self.get_and_cache_optimization_results.cache_clear()
+
+        # 1- check optimization results file
+        optimization_file_path = self._get_optimization_file_path(
+            departure_port, arrival_port
+        )
+
+        # 2- load optimization results from file
+        optimization_results = await self._load_optimization_file_results(
+            optimization_file_path
+        )
+
+        # 3- validate results schema
+        serialized_optimization_resulst = self._serialize_results_schema(
+            optimization_results
+        )
+
+        return serialized_optimization_resulst
+
     def _get_optimization_file_path(self, departure_port: str, arrival_port: str):
         file_path = (
             f"{self.efs_storage_path}/optimization_{departure_port}_{arrival_port}.csv"
@@ -82,35 +114,3 @@ class OptimizationService(Service):
                 f"OPTIMIZATION SERVICE:: failed to validate optimization resutls schema >> \n {e}"
             )
             raise OptimizationResultsNotValidException("Optimization results not valid")
-
-    @lru_cache(
-        10
-    )  # Assuming EFS Service might need cache (testing could prove the reverse)
-    async def get_and_cache_optimization_results(
-        self, departure_port: str, arrival_port: str, force_reload: bool = False
-    ) -> Awaitable[list[OptimizationResult]]:
-        """generate optimization results based on the given ports and load data from according file
-
-        Note: Lets assume that the optimization result store its response in a file format like
-        optimization_{departure_port}_{arrival_port}.csv >> so we can load it from the EFS storage
-
-        """
-        if force_reload:
-            self.get_and_cache_optimization_results.cache_clear()
-
-        # 1- check optimization results file
-        optimization_file_path = self._get_optimization_file_path(
-            departure_port, arrival_port
-        )
-
-        # 2- load optimization results from file
-        optimization_results = await self._load_optimization_file_results(
-            optimization_file_path
-        )
-
-        # 3- validate results schema
-        serialized_optimization_resulst = self._serialize_results_schema(
-            optimization_results
-        )
-
-        return serialized_optimization_resulst
