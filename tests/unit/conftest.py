@@ -3,9 +3,28 @@ from io import StringIO
 import pandas as pd
 import pytest
 from carnival.core.config import settings
-from carnival.services.optimization_service import OptimizationService
-from carnival.services.route_service import RouteService
+from carnival.services.optimization_service import (
+    OptimizationResult,
+    OptimizationService,
+)
+from carnival.services.route_service import AllowedRegionFuel, RegionFuels, RouteService
+from carnival.services.compilance_service import ComplianceService
+from unittest.mock import MagicMock
 
+
+@pytest.fixture
+def correct_dep_port():
+    return "OMSTQ"
+
+
+@pytest.fixture
+def correct_arrival_port():
+    return "AEJEA"
+
+
+# ************************
+# Optimization Service
+# ************************
 
 # Optimization service mock data
 MOCK_CORRECT_CSV_CONTENT = """
@@ -39,8 +58,11 @@ def wrong_mock_dataframe():
     return pd.read_csv(StringIO(MOCK_WRONG_CSV_CONTENT.strip()))
 
 
-# Route service mock data
+# ************************
+# Route Service
+# ************************
 
+# Route service mock data
 MOCK_ALLOWED_FUELS = {
     "regions": [
         {
@@ -75,3 +97,101 @@ def mock_route_geometry():
 @pytest.fixture
 def mock_allowed_fuels():
     return MOCK_ALLOWED_FUELS
+
+
+# ************************
+# Compilance Service
+# ************************
+
+
+@pytest.fixture
+def compliance_service():
+    optimization_service = MagicMock()
+    route_service = MagicMock()
+    return ComplianceService(optimization_service, route_service)
+
+
+@pytest.fixture
+def allowed_fuels():
+    return RegionFuels(
+        regions=[
+            AllowedRegionFuel(
+                region_start=0.0, region_end=27.0, is_aaqs_allowed=["MGO"]
+            )
+        ]
+    )
+
+
+@pytest.fixture
+def wrong_allowed_fuels():
+    return RegionFuels(
+        regions=[
+            AllowedRegionFuel(
+                region_start=0.0, region_end=27.0, is_aaqs_allowed=["MGO"]
+            )
+        ]
+    )
+
+
+@pytest.fixture
+def optimization_result():
+    return [
+        OptimizationResult(
+            timestamp="2025-02-04 01:30:00",
+            sog=10.5,
+            latitude=23.7,
+            longitude=58.5,
+            timezone_name="UTC",
+            hfo_fuel_consumption=0.0,
+            mgo_fuel_consumption=1.72,
+            avg_rpm=150,
+            mgo_fuel_flow_tonnes_per_h=0.05,
+            hfo_fuel_flow_tonnes_per_h=0.1,
+            sulphur_content=0.5,
+        ),
+        OptimizationResult(
+            timestamp="2025-02-04 02:00:00",
+            sog=11.0,
+            latitude=23.8,
+            longitude=58.4,
+            timezone_name="UTC",
+            hfo_fuel_consumption=0.0,
+            mgo_fuel_consumption=1.68,
+            avg_rpm=155,
+            mgo_fuel_flow_tonnes_per_h=0.04,
+            hfo_fuel_flow_tonnes_per_h=0.09,
+            sulphur_content=0.5,
+        ),
+    ]
+
+
+@pytest.fixture
+def wrong_optimization_result():
+    return [
+        OptimizationResult(
+            timestamp="2025-02-04 01:30:00",
+            sog=10.5,
+            latitude=23.7,
+            longitude=58.5,
+            timezone_name="UTC",
+            hfo_fuel_consumption=1.5,
+            mgo_fuel_consumption=0.0,
+            avg_rpm=150,
+            mgo_fuel_flow_tonnes_per_h=0.05,
+            hfo_fuel_flow_tonnes_per_h=0.1,
+            sulphur_content=0.5,
+        ),
+        OptimizationResult(
+            timestamp="2025-02-04 02:00:00",
+            sog=11.0,
+            latitude=23.8,
+            longitude=58.4,
+            timezone_name="UTC",
+            hfo_fuel_consumption=1.2,
+            mgo_fuel_consumption=0.0,
+            avg_rpm=155,
+            mgo_fuel_flow_tonnes_per_h=0.04,
+            hfo_fuel_flow_tonnes_per_h=0.09,
+            sulphur_content=0.5,
+        ),
+    ]
