@@ -1,7 +1,7 @@
 [project]
 name = "carnival"
 version = "0.1.0"
-description = "carnival compilance service that checks if an optimization result follows the"
+description = "carnival compilance service that checks if an optimization result follows the fuel allowances for the route"
 authors = [
     {name = "aboneda", email = "abdelrahmanaboneda@gmail.com"},
 ]
@@ -9,6 +9,10 @@ dependencies = [
     "fastapi>=0.115.8",
     "uvicorn>=0.34.0",
     "httpx>=0.28.1",
+    "pydantic-settings>=2.7.1",
+    "python-dotenv>=1.0.1",
+    "aiofiles>=24.1.0",
+    "pandas>=2.2.3",
 ]
 requires-python = ">=3.11"
 readme = "README.md"
@@ -40,11 +44,18 @@ sort = "-Cover"
 [tool.coverage.html]
 show_contexts = true
 
+[tool.pytest.ini_options]
+markers = [
+    "data_validation: check if the loaded optimization data is valid ",
+]
+log_cli=true
 
 [dependency-groups]
 test = [
     "pytest>=8.3.4",
+    "pytest-asyncio>=0.25.3",
     "pytest-cov>=6.0.0",
+
 ]
 lint = [
     "ruff>=0.9.6",

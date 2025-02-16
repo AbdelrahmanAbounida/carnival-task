@@ -28,8 +28,10 @@ repos:
   #       args: ["--explicit-package-bases"]
   #       additional_dependencies: [pydantic==2.9.2]
   #       stages: [pre-commit]
-  - repo: https://github.com/pycqa/isort
-    rev: 6.0.0
-    hooks:
-      - id: isort
-        name: isort (python)
+
+  # there is a conflict between ruff format and isort so lets disable it for now
+  # - repo: https://github.com/pycqa/isort
+  #   rev: 6.0.0
+  #   hooks:
+  #     - id: isort
+  #       name: isort (python)
