@@ -14,7 +14,19 @@ Note: the following venv creation is for unix os (mac/linux)
 ## 0. Quick start
 
 ```
-make run
+make run RUNNER=python # for pip setup
+```
+
+OR
+
+```
+make run RUNNER=pdm
+```
+
+OR
+
+```
+make run RUNNER=docker
 ```
 
 ## 1. PDM Build
@@ -28,6 +40,14 @@ pip install pdm
 python -m venv venv
 source venv/bin/activate
 pdm install
+```
+
+<br />
+
+**Run the app**
+
+```
+pdm run main.py
 ```
 
 <br />
@@ -53,6 +73,15 @@ docker build -t carnival .
 docker run -it -p 7000:7000 carnival
 ```
 
+## 3. Pip
+
+```
+python -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+python main.py
+```
+
 # TODO
 
 - [x] Basic Project Setup
@@ -68,20 +97,10 @@ docker run -it -p 7000:7000 carnival
 - [x] Basic Functionality
 - [x] Update Task
 - [x] auto build and deploy on each pull / push to main
-- [ ] setup in README
-- [ ] authenticate routes
-- [ ] Makefile
+- [x] setup in README
+- [x] authenticate routes
+- [x] Makefile
 
 - [ ] k6 ,load testing
+- [ ] final tesing of CICD
 - [ ] see how to scale the app vertically , horizontally, auto scaling
-- [ ] k8s
-- [ ] aws deploy (ECS, ELB, cloudfront, Fragate)
-- [ ] nginx configuration
-- [ ] promotheus , grafana
-- [ ] caching
-- [ ] profiling
-- [ ] Terraform Provisioning
-- [ ] Ansible Configuration
-- [ ] ratelimit
-- [ ] bumping api on push to main
-- [ ] pytest cov
