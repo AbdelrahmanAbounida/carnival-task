@@ -7,3 +7,4 @@ cli
 .ruff_cache
 docs.txt
 .mypy_cache
+.pytest_cache

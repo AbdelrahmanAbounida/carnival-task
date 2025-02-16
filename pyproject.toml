@@ -1,7 +1,7 @@
 [project]
 name = "carnival"
 version = "0.1.0"
-description = "carnival compilance service that checks if an optimization result follows the"
+description = "carnival compilance service that checks if an optimization result follows the fuel allowances for the route"
 authors = [
     {name = "aboneda", email = "abdelrahmanaboneda@gmail.com"},
 ]
