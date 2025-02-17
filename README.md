@@ -2,16 +2,24 @@
 
 carnival compilance service that checks if an optimization result follows the fuel allowances for the route
 
+## Load Testing
+
+![load](./assets/response_time.png)
+
+## Sample Resoponse
+
+![resp](./assets/sample_resp.png)
+
+# Get Started
+
+Note: the following venv creation is for unix os (mac/linux)
+
+## setup
+
 ```bash
 git clone https://github.com/AbdelrahmanAbounida/carnival-task
 cd carnival-task
 ```
-
-# Basic Setup
-
-Note: the following venv creation is for unix os (mac/linux)
-
-## 0. Quick start
 
 ```
 make run RUNNER=python # for pip setup
@@ -82,6 +90,22 @@ pip install -r requirements.txt
 python main.py
 ```
 
+# How To call the api
+
+```python
+import requests
+
+url = "http://localhost:7000/api/v1/compilance?departure_port=OMSTQ&arrival_port=AEJEA"
+
+headers = {
+  'Accept-Encoding': 'gzip',
+  'server-api-key': 'abc'
+}
+
+response = requests.request("GET", url, headers=headers)
+print(response.json())
+```
+
 # TODO
 
 - [x] Basic Project Setup
@@ -100,7 +124,5 @@ python main.py
 - [x] setup in README
 - [x] authenticate routes
 - [x] Makefile
-
-- [ ] k6 ,load testing
+- [x] load testing
 - [ ] final tesing of CICD
-- [ ] see how to scale the app vertically , horizontally, auto scaling

@@ -10,7 +10,7 @@ from typing import Awaitable
 
 class CompliantReport(BaseModel):
     is_compliant: bool
-    non_compliant_entries: list[dict]
+    non_compliant_entries: list[dict]  # TODO:: add fixed schema
 
 
 class ComplianceService(Service):
@@ -29,7 +29,6 @@ class ComplianceService(Service):
                 departure_port, arrival_port
             )
         )
-
         allowed_fuels = await self.route_service.get_allowed_fuels(
             departure_port, arrival_port
         )
@@ -42,7 +41,6 @@ class ComplianceService(Service):
     ) -> CompliantReport:
         non_compliant_entries = []
 
-        # TODO:: check how to optimize this from o(n2) to o(logn)
         for entry in optimization_result:
             latitude, longitude = entry.latitude, entry.longitude
             used_fuel = "HFO" if entry.hfo_fuel_consumption > 0 else "MGO"

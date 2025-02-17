@@ -29,9 +29,8 @@ jobs:
       - name: Install dependencies
         run: pdm install
 
-      # TODO:: add unit testing
-      # - name: Run unit tests
-      #   run: pdm run pytest tests/unit
+      - name: Run unit tests
+        run: pdm run pytest tests/unit
 
       - name: Run integration tests
         run: pdm run pytest tests/integration

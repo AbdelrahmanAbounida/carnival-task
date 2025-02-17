@@ -8,3 +8,4 @@ cli
 docs.txt
 .mypy_cache
 .pytest_cache
+**/.DS_Store

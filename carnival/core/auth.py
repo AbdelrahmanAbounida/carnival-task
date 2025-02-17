@@ -7,12 +7,9 @@ api_key_header = APIKeyHeader(name="server-api-key", auto_error=False)
 keys = [settings.SERVER_API_KEY]
 
 
-def get_static_api_key(
-    request: Request, api_key: str = Depends(api_key_header)
-) -> str:  #  -> str:
+def get_static_api_key(request: Request, api_key: str = Depends(api_key_header)) -> str:
     # TODO:: move to generic decorator for public routes
     current_path = request.url.path
-    print(f"current_path: {current_path}")
     if current_path == "/":
         return True
 

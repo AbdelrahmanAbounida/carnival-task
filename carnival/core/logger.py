@@ -17,5 +17,4 @@ class CarnivalLogger:
         self.console.print(message)
 
 
-# logger = logging.getLogger("carnival Logger")
 logger = CarnivalLogger()

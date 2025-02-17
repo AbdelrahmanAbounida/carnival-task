@@ -5,10 +5,6 @@ env:
   ECR_REPOSITORY: carnival
 
 on:
-  push:
-    branches: [feat/abdel]
-    tags:
-      - "v*"
   pull_request:
     branches: [main]
 
