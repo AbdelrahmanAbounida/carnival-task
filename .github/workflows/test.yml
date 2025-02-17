@@ -23,6 +23,10 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
+      # Set environment variable for testing
+      - name: Set environment variables
+        run: echo "SERVER_API_KEY=${{ secrets.SERVER_API_KEY }}" >> $GITHUB_ENV
+
       - name: Install PDM
         run: pip install pdm
 
